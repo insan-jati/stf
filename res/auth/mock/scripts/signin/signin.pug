@@ -13,34 +13,43 @@
         span(ng-show='error.$incorrect', translate) Incorrect login details
         span(ng-show='error.$server', translate) Server error. Check log output.
 
-      .form-group
-        .input-group
-          span.input-group-addon
-            i.fa.fa-user
-          input.form-control(ng-model='username', name='username', required, type='text', placeholder='Name',
-          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-login username')
-        .alert.alert-warning(ng-show='signin.username.$dirty && signin.username.$invalid')
-          span(translate) Please enter your name
+      //- .form-group
+      //-   .input-group
+      //-     span.input-group-addon
+      //-       i.fa.fa-user
+      //-     input.form-control(ng-model='username', name='username', required, type='text', placeholder='Name',
+      //-     autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-login username')
+      //-   .alert.alert-warning(ng-show='signin.username.$dirty && signin.username.$invalid')
+      //-     span(translate) Please enter your name
 
       .form-group
         .input-group
           span.input-group-addon
-            i.fa.fa-envelope
+            i.fa.fa-user
           input.form-control(ng-model='email', name='email', required, type='email', placeholder='E-mail',
           autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-login email')
         .alert.alert-warning(ng-show='signin.email.$dirty && signin.email.$invalid')
           span(ng-show='signin.email.$error.email', translate) Please enter a valid email
           span(ng-show='signin.email.$error.required', translate) Please enter your email
+      
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-lock
+          input.form-control(ng-model='password', name='password', required, type='password', placeholder='Password',
+          autocorrect='off', autocapitalize='off', spellcheck='false')
+        .alert.alert-warning(ng-show='signin.password.$dirty && signin.password.$invalid')
+          span(translate) Please enter your password
 
       input.btn.btn-lg.btn-primary.btn-block(type='submit', value='Log In')
 
-      button.btn.btn-sm.btn-default-outline(
-        type='button'
-        uib-tooltip="{{'Write a mail to the support team' | translate}}"
-        ng-disabled='!contactEmail'
-        ng-click='mailToSupport()'
-        tooltip-placement='top'
-        tooltip-popup-delay='500')
-          i.fa.fa-envelope-o
-          span(translate) Contact Support
+      //- button.btn.btn-sm.btn-default-outline(
+      //-   type='button'
+      //-   uib-tooltip="{{'Write a mail to the support team' | translate}}"
+      //-   ng-disabled='!contactEmail'
+      //-   ng-click='mailToSupport()'
+      //-   tooltip-placement='top'
+      //-   tooltip-popup-delay='500')
+      //-     i.fa.fa-envelope-o
+      //-     span(translate) Contact Support
 

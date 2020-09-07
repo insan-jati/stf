@@ -1466,7 +1466,7 @@ paths:
       security:
         - accessTokenAuth: []
   # I do know this is against REST principal to use verb as endpoint. But I feel it is more easy to
-  # understand in comparision of using PUT/PATCH
+  # unders
   /user/devices/{serial}/remoteConnect:
     x-swagger-router-controller: user
     post:
@@ -2106,6 +2106,151 @@ paths:
               * 504: Gateway Time-out => server is not responding
           schema:
             $ref: "#/definitions/UnexpectedErrorResponse"
+      security:
+        - accessTokenAuth: []
+  /tdf/accessTokens:
+    x-swagger-router-controller: tdf
+    post:
+      summary: Create access token
+      description: TDF access token endpoint to generate token
+      operationId: tdfCreateAccessToken
+      tags:
+        - tdf
+      # parameters:
+      #   - name: title
+      #     in: query 
+      #     description: Access token title 
+      #     required: true
+      #     type: string
+      parameters:
+        - name: token
+          in: body
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+                description: Email of the access token's owner
+      responses:
+        "201":
+          description: Access token information
+          schema:
+            $ref: "#/definitions/UserAccessTokenResponse"
+        default:
+          description: >
+            Unexpected Error:
+              * 401: Unauthorized => bad credentials
+              * 500: Internal Server Error
+          schema:
+            $ref: "#/definitions/UnexpectedErrorResponse"
+      security:
+        - accessTokenAuth: []
+    delete:
+      summary: Delete access token
+      description: TDF access token endpoint to delete access token by its title
+      operationId: tdfDeleteAccessToken
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+        - user
+      parameters:
+        - name: token
+          in: body
+          schema:
+            type: object
+            required:
+              - email
+              - title
+            properties:
+              email:
+                type: string
+                description: Email of the access token's owner
+              title:
+                type: string
+                description: Title of the access token
+      responses:
+        "200":
+          description: Delete user access token response
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
+  /tdf/adbPublicKeys:
+    x-swagger-router-controller: tdf
+    post:
+      summary: Adb public keys
+      description: Add adb public key for current user
+      operationId: tdfAddAdbPublicKey
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+        - user
+      parameters:
+      - name: adb
+        in: body
+        schema:
+            type: object
+            required:
+              - publickey
+            properties:
+              publickey:
+                type: string
+                description: adb public key (~/.android/id_rsa.pub)
+              title:
+                type: string
+                description: By default will be extracted from public key
+              email:
+                type: string
+                description: Email of the adb key owner
+      responses:
+        "200":
+          description: Add adb key response
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
+    delete:
+      summary: Delete Adb Public Key
+      description: Delete adb public key from the user
+      operationId: tdfDeleteAdbPublicKey
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+        - user
+      parameters:
+        - name: adb
+          in: body
+          schema:
+            type: object
+            required:
+              - email
+              - fingerprint
+            properties:
+              email:
+                type: string
+                description: Email of the adb's owner
+              fingerprint:
+                type: string
+                description: Fingerprint of the adb
+      responses:
+        "200":
+          description: Delete adb public key response
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
       security:
         - accessTokenAuth: []
   /swagger.json:
